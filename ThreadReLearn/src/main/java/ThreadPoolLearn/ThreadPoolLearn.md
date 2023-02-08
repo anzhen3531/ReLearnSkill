@@ -219,7 +219,108 @@ public ThreadPoolExecutor(int corePoolSize,
 
 ### 3.2、拒绝策略 `RejectedExecutionHandler` 解析
 
+#### 3.2.1、源码中的拒绝策略实现
+
+<img src="image/image-20230208094754515.png" alt="image-20230208094754515" style="zoom: 50%;" /> 
+
+
+
+- CallerrunsPolicy  
+
+  - 完全交予主线程处理
+
+  - ```
+    
+    ```
+
+- AbortPolicy
+
+  - 不处理只抛出异常
+
+- DiscardOldestPolicy
+
+  - 完全不处理
+
+- DiscardPolicy
+
+  - 删除线程池中最旧的任务并把这个任务添加到线程池中
+
+#### 3.2.2、测试四种拒绝策略的不同
+
+`AbortPolicy`：测试
+
+```java
+public static void main(String[] args) {
+    System.out.println("TestThreadRejectedExecutionHandler :" + Thread.currentThread().getName());
+    // 创建一个核心线程数和最大线程数都为1的线程池
+    // 队列方式采用的是阻塞队列
+    // 当超过阻塞队列的时候是会存在报错的
+    ExecutorService poolExecutor = new ThreadPoolExecutor(1,
+            1,
+            0L,
+            TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(1),
+            new ThreadPoolExecutor.AbortPolicy());
+    poolExecutor.submit(() -> {
+        System.out.println(Thread.currentThread().getName() + "run ");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    });
+    poolExecutor.submit(() -> {
+        System.out.println(Thread.currentThread().getName() + "执行线程");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    });
+    poolExecutor.submit(() -> {
+        System.out.println(Thread.currentThread().getName() + "执行线程");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    });
+    poolExecutor.shutdown();
+}
+```
+
+结果：出现了异常 
+
+![image-20230208102601391](image/image-20230208102601391.png)
 
 
 
 
+
+CallerrunsPolicy  ：直接交予主线程执行这个任务
+
+代码同上，修改拦截策略
+
+结果：
+
+![image-20230208102700899](image/image-20230208102700899.png) 
+
+主线程执行了超过线程池的最大线程数和队列的长度就会触发拒绝策略
+
+
+
+`DiscardOldestPolicy`：删除队列中最老的任务 之后将任务添加到线程中
+
+![image-20230208104950673](image/image-20230208104950673.png) 
+
+
+
+`DiscardPolicy`： 拒绝任何处理
+
+![image-20230208105127751](image/image-20230208105127751.png) 
+
+
+
+### 3.3、阻塞队列的不同以及选型
+
+// TODO SUCCESS 2023/2/8
