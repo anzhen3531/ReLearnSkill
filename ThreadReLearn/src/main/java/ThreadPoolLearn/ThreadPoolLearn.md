@@ -323,4 +323,6 @@ CallerrunsPolicy  ：直接交予主线程执行这个任务
 
 ### 3.3、阻塞队列的不同以及选型
 
-// TODO SUCCESS 2023/2/8
+目前线程池中所有的阻塞队列都是通过实现 `BlockingQueue`实现的
+
+<img src="image/image-20230209090535265.png" alt="image-20230209090535265" style="zoom:50%;" /> 

@@ -42,6 +42,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "6013cd20138e954753ebfda65af74575",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -73,7 +74,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1675820552045</updated>
-      <workItem from="1675820553114" duration="2828000" />
+      <workItem from="1675820553114" duration="3596000" />
+      <workItem from="1675904526937" duration="791000" />
     </task>
     <servers />
   </component>
