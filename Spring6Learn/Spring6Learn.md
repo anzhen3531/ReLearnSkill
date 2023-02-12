@@ -120,7 +120,7 @@ Bean管理：Bean对象的创建，以及Bean对象属性的赋值
 
 详解查看图片
 
-https://img2020.cnblogs.com/blog/1369022/202110/1369022-20211025232159069-1664351264.png
+[事务隔离级别](https://img2020.cnblogs.com/blog/1369022/202110/1369022-20211025232159069-1664351264.png)
 
 
 
@@ -144,24 +144,49 @@ Spring有多少种事务隔离级别 ？？
 
 ### 4.1、Spring事务失效的场景
 
+- 访问修饰符不是public
+- 方法使用final修饰 或者static
+- 作为内部方法被直接调用
+- 未被spring管理
+- 多线程调用 
+- 表不支持事务
+- 事务没有开启
+- 事务传播机制
+- 手动catch异常导致事务没有被出发
+- 手动抛了别的异常
+  - 由于默认情况下只会回滚RuntimeException（运行时异常）和Error（错误），对于普通的非运行时异常，它不会回滚
+- 自定义回滚的异常和实际业务产生的异常不一致也不会出发回滚
+
 
 
 ### 4.2、事务传播机制
 
-- Propagation.REQUIRED （需要）
+- **Propagation.REQUIRED** （需要）
   - 默认的事务传播级别，它表示如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。
-- Propagation.SUPPORTS （支持）
+- **Propagation.SUPPORTS** （支持）
   - 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
-- Propagation.MANDATORY （强制）
+- **Propagation.MANDATORY** （强制）
   - （mandatory：强制性）如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。
-- Propagation.REQUIRES_NEW （需要新的事务）
+- **Propagation.REQUIRES_NEW** （需要新的事务）
   - 表示创建一个新的事务，如果当前存在事务，则把当前事务挂起。也就是说不管外部方法是否开启事务，**Propagation.REQUIRES_NEW 修饰的内部方法会新开启自己的事务，且开启的事务相互独立，互不干扰。**
-- Propagation.NOT_SUPPORTED （不支持）
+- Propagation.**NOT_SUPPORTED** （不支持）
   - 以非事务方式运行，如果当前存在事务，则把当前事务挂起。
-- Propagation.NEVER （没有事务）
+- **Propagation.NEVER** （没有事务）
   - 以非事务方式运行，如果当前存在事务，则抛出异常。
-- Propagation.NESTED （嵌套）
+- **Propagation.NESTED** （嵌套）
   - 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于PROPAGATION_REQUIRED
+
+总结:
+
+支持当前事务
+
+**REQUIRED**  ，**SUPPORTS** ，**MANDATORY** 
+
+不支持当前事务
+
+REQUIRES_NEW、NOT_SUPPORTED、NEVER
+
+嵌套：NESTED
 
 ## 5、Spring 的AOP编程
 
