@@ -190,3 +190,109 @@ REQUIRES_NEW、NOT_SUPPORTED、NEVER
 
 ## 5、Spring 的AOP编程
 
+### 5.1、AOP术语
+
+- 切面  aspect
+- 切点 poincut
+- 通知 advice
+- 连接点 join point
+- 引入 introduction
+- 织入 weaving
+
+### 5.2、SpringBoot3 AOP使用
+
+常用注解 
+
+- @Aspect 切面
+- @PointCut 切点
+- @Before 在切入点方法执行之前执行
+- @After 在切入点方法执行之后执行
+- @Round 在切入点方法之前之前执行，之后也执行
+
+```java
+
+// 定义一个切面
+@Aspect
+@Component
+public class AspectOfPointLearn {
+
+    /*
+    定义一个切入点 在Controller执行
+     */
+    @Pointcut("execution (* xyz.ziang.controller.*.*(..))")
+    // 运行时执行 任意返回值 包路径 任意类 任意方法 任意参数
+    public void test() {}
+
+    /**
+     * 方法调用之前执行通知
+     */
+    // 在TEST方法之前执行
+    @Before("test()")
+    public void beforeAdvice() {
+        System.out.println("beforeAdvice...");
+    }
+
+    /**
+     * 方法调用之后执行通知
+     */
+    @After("test()")
+    public void afterAdvice() {
+        System.out.println("afterAdvice...");
+    }
+
+    /**
+     * 环绕通知 调用前和调用后都执行通知
+     * 
+     * @param proceedingJoinPoint
+     */
+    @Around("test()")
+    public void aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
+        System.out.println("before");
+        try {
+            proceedingJoinPoint.proceed();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        System.out.println("after");
+    }
+}
+
+```
+
+
+
+总结：
+
+![image-20230212181500139](E:\project\ReLearnSkill\Spring6Learn\${image}\image-20230212181500139.png) 
+
+before比around 提前执行
+
+after 比 around 之后执行
+
+
+
+## 6、SpringBoot3 的自动装配机制
+
+SpringBoot 自动配置和 SpringBoot3 有区别 
+
+SpringBoot3的自动配置文件变动了，可以在源码中找到对应的解释
+
+1. SpringBootApplication 注解
+2. 找到EnableAutoConfiguration注解
+3. EnableAutoConfiguration注解中导入了这个AutoConfigurationImportSelector类
+4.  ![image-20230212182313432](E:\project\ReLearnSkill\Spring6Learn\${image}\image-20230212182313432.png)
+5. 其中有详细解释注解
+
+```
+"No auto configuration classes found in META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports. If you are using a custom packaging, make sure that file is correct."
+
+翻译
+在META-INF/spring/org.springframework.boot. autoconfiguration . autoconfiguration .imports中没有找到自动配置类。如果您正在使用自定义打包，请确保该文件是正确的。”
+```
+
+从SpringBoot3 更新之后，自动配置文件由之前的Spring.
+
+
+
+###  6.1、SpringBoot 3自动配置改动项![image-20230212182731566](E:\project\ReLearnSkill\Spring6Learn\${image}\image-20230212182731566.png)
+
