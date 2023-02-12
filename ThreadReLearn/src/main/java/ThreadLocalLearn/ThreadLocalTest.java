@@ -1,9 +1,11 @@
 package ThreadLocalLearn;
 
+import java.io.Serializable;
+
 /**
  * Thread Local Test
  */
-public class ThreadLocalTest {
+public class ThreadLocalTest implements Serializable {
 
     public static void main(String[] args) {
         // 在异步或者是别的情况下  ThreadLocal 不会传递到别的线程中去 应为这个是线程私有的
