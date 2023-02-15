@@ -263,7 +263,7 @@ public class AspectOfPointLearn {
 
 总结：
 
-![image-20230212181500139](E:\project\ReLearnSkill\Spring6Learn\${image}\image-20230212181500139.png) 
+![image-20230212181500139](.\${image}\image-20230212181500139.png) 
 
 before比around 提前执行
 
@@ -280,7 +280,7 @@ SpringBoot3的自动配置文件变动了，可以在源码中找到对应的解
 1. SpringBootApplication 注解
 2. 找到EnableAutoConfiguration注解
 3. EnableAutoConfiguration注解中导入了这个AutoConfigurationImportSelector类
-4.  ![image-20230212182313432](E:\project\ReLearnSkill\Spring6Learn\${image}\image-20230212182313432.png)
+4.  ![image-20230212182313432](image/image-20230212182313432.png)
 5. 其中有详细解释注解
 
 ```
@@ -294,5 +294,5 @@ SpringBoot3的自动配置文件变动了，可以在源码中找到对应的解
 
 
 
-###  6.1、SpringBoot 3自动配置改动项![image-20230212182731566](E:\project\ReLearnSkill\Spring6Learn\${image}\image-20230212182731566.png)
+###  6.1、SpringBoot 3自动配置改动项![image-20230212182731566](.\${image}\\image-20230212182731566.png)
 
