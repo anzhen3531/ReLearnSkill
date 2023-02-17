@@ -26,3 +26,6 @@ hs_err_pid*
 /target/
 !/images.iml
 /.idea/
+./SpringBoot3/SpringBoot3.iml
+./Spring6Learn/Spring6Learn.iml
+./ThreadReLearn/ThreadReLearn.iml
